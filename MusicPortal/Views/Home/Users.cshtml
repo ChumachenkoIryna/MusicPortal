@@ -1,0 +1,41 @@
+﻿@model List<MusicPortal.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "_Layout";
+}
+
+<h1>Users List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Level</th>
+            @if (Context.Session.GetInt32("Level") == 2)
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                
+                <td>
+                @user.Username
+                   
+                </td>
+
+                <td>
+                    @user.Level
+                    </td>
+              <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-light">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id" type="button" class="btn btn-light">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

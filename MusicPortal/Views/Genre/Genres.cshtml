@@ -1,0 +1,47 @@
+﻿@model List<MusicPortal.Models.Genre>
+
+@{
+    ViewData["Title"] = "Genres";
+    Layout = "_Layout";
+}
+
+<h1>Genres List</h1>
+  @if (Context.Session.GetInt32("Level") == 2)
+                {
+<p>
+       
+        <a asp-action="Create" type="button" class="btn btn-light">Create New</a>
+</p>
+                }
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            @if (Context.Session.GetInt32("Level") == 2)
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in Model)
+        {
+            <tr>
+                <td>
+                    <h2>
+                    @genre.Name
+                    </h2>
+                   
+                </td>
+                @if (Context.Session.GetInt32("Level") == 2)
+                {
+                    <td>
+
+                        <a asp-action="Edit" asp-route-id="@genre.Id" type="button" class="btn btn-light">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@genre.Id" type="button" class="btn btn-light">Delete</a>
+                </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

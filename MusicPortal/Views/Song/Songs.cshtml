@@ -1,0 +1,97 @@
+﻿@model List<MusicPortal.Models.Song>
+
+@{
+    ViewData["Title"] = "Songs";
+    Layout = "_Layout";
+}
+
+<style>
+    /* Styles for Songs page */
+    .song-container {
+        margin-bottom: 20px;
+        width: 350px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #5fdeda;
+        align-content:center;
+    }
+
+    .song-info {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .song-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .song-actions a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 10px;
+        }
+
+            .song-actions a:hover {
+                color: #000;
+            }
+
+   
+</style>
+
+<h1>Songs List</h1>
+@if (Context.Session.GetInt32("Level") >= 1)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-light">Create New</a>
+    </p>
+}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            
+           
+           
+
+                @foreach (var song in Model)
+                {
+                <div class="col">
+                    <div class="song-container">
+                        <div class="song-info">
+                            @song.Name - @song.Artist?.Name
+                        </div>
+                        <div class="col">
+                            <img src="@song.Image" alt="@song.Name" style="border-radius: 10px; max-width: 200px; max-height: 300px;">
+                          <br />
+                            <audio controls>
+                                <source src="@song.Path" />
+                            </audio>
+                          
+                            <br />
+                            <div class="song-actions">
+
+                               
+                                <div>
+                                    <a asp-controller="Song" asp-action="Details" asp-route-id="@song.Id" type="button" class="btn btn-secondary">Details</a>
+                                    @if (Context.Session.GetInt32("Level") == 2)
+                                    {
+                                      
+                                        <a asp-action="Delete" asp-route-id="@song.Id" type="button" class="btn btn-secondary">Delete</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                }
+
+          
+        </div>
+    </div>
+</div>

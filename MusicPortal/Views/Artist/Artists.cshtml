@@ -1,0 +1,44 @@
+﻿@model List<MusicPortal.Models.Artist>
+
+@{
+    ViewData["Title"] = "Artists";
+    Layout = "_Layout";
+}
+
+
+
+<div class="container">
+    <h1>Artists List</h1>
+    @if (Context.Session.GetInt32("Level") == 2)
+    {
+        <div class="actions">
+            <a asp-action="Create" type="button" class="btn btn-light">Create New</a>
+        </div>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                @if (Context.Session.GetInt32("Level") == 2)
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artist in Model)
+            {
+                <tr>
+                    <td><h3>@artist.Name</h3></td>
+                    @if (Context.Session.GetInt32("Level") == 2)
+                    {
+                        <td class="actions">
+                            <a asp-action="Edit" asp-route-id="@artist.Id" type="button" class="btn btn-light">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@artist.Id" type="button" class="btn btn-light">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

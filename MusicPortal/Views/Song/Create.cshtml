@@ -1,0 +1,68 @@
+﻿@model MusicPortal.Models.Song
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center mb-4">Create a New Song</h1>
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Song Name:</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter song name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ArtistId" class="control-label">Artist:</label>
+                            <select asp-for="ArtistId" class="form-control">
+                                <option value="">Select artist</option>
+                                @foreach (var item in ViewBag.Artist)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ArtistId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="GenreId" class="control-label">Genre:</label>
+                            <select asp-for="GenreId" class="form-control">
+                                <option value="">Select genre</option>
+                                @foreach (var item in ViewBag.Genre)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="GenreId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Audio File:</label>
+                            <input type="file" name="uploadedFile" class="form-control-file" />
+                            <span class="text-danger">@(ViewBag.Message)</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Image File:</label>
+                            <input type="file" name="uploadedImage" class="form-control-file" />
+                            <span class="text-danger">@(ViewBag.ImageMessage)</span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                            <a asp-action="Songs" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
